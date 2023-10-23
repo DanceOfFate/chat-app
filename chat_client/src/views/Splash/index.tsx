@@ -17,6 +17,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
             headerShown: false
         })
     }, []);
+
     const translateY = new Animated.Value(0);
     const duration = 800;
 
@@ -46,7 +47,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
         >
             <StatusBar barStyle="light-content"/>
             <Animated.View style={{transform: [{translateY}]}}>
-                <Title text="RealtimeChat"/>
+                <Title text="RealtimeChat" color="white"/>
             </Animated.View>
         </SafeAreaView>
     )
