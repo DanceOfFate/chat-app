@@ -1,33 +1,48 @@
-import React, { useCallback } from 'react';
-import { registerRootComponent } from "expo";
-import {SplashScreen} from "./src/views";
-import * as Splash from "expo-splash-screen"
-import {useFonts} from "expo-font";
-import AppLoading from "expo-app-loading";
+import React, {useState} from 'react';
+import {registerRootComponent} from "expo";
+import {
+    Home,
+    Messages,
+    Search,
+    SignIn,
+    SignUp,
+    SplashScreen as Splash
+} from "./src/views";
+import {NavigationContainer} from "@react-navigation/native";
+import {StatusBar} from "react-native";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {RootStackParamList} from "./src/types";
+import './src/core/fontawesome';
 
-
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
 
 function App() {
-  const [fontsLoaded] = useFonts({
-    leckerliRegular: require("./src/assets/fonts/LeckerliOne-Regular.ttf")
-  })
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await Splash.hideAsync();
-    }
-  }, [fontsLoaded])
-
-  if (!fontsLoaded) {
-      return null;
-  }
-
-
-
-  return (
-    <SplashScreen />
-  );
+    const [initialized, setInitialized] = useState(true);
+    const [authenticated, setAuthenticated] = useState(true)
+    return (
+        <NavigationContainer>
+            <StatusBar barStyle='dark-content' />
+            <Stack.Navigator>
+                <>
+                    {!initialized ? (
+                        <Stack.Screen name="Splash" component={Splash}/>
+                    ) : !authenticated ? (
+                        <>
+                            <Stack.Screen name="SignIn" component={SignIn}/>
+                            <Stack.Screen name="SignUp" component={SignUp}/>
+                        </>
+                    ) : (
+                        <>
+                            <Stack.Screen name="Home" component={Home}/>
+                            <Stack.Screen name="Search" component={Search}/>
+                            <Stack.Screen name="Messages" component={Messages}/>
+                        </>
+                    )}
+                </>
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
 
 export default App;

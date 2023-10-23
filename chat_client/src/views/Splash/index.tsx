@@ -5,9 +5,18 @@ import {
     View
 } from "react-native";
 import {Title} from "../../components";
-import {useEffect} from "react";
+import React, {useEffect, useLayoutEffect} from "react";
+import {NativeStackScreenProps} from "@react-navigation/native-stack";
+import {RootStackParamList} from "../../types";
 
-export const SplashScreen = () => {
+type SplashScreenProps = NativeStackScreenProps<RootStackParamList, "Splash">
+
+export const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerShown: false
+        })
+    }, []);
     const translateY = new Animated.Value(0);
     const duration = 800;
 

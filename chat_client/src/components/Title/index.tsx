@@ -11,7 +11,6 @@ export const Title: React.FC<ITitleProps> = ({ text }) => {
                 color: "white",
                 textAlign: 'center',
                 fontSize: 48,
-                fontFamily: "leckerliRegular"
             }}
         >
             { text }
