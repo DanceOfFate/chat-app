@@ -3,14 +3,19 @@ import React from "react";
 import {styles} from "./button.style";
 
 interface IButtonProps {
-    text: string
+    text: string;
+    onPress: () => void;
 }
-export const Button: React.FC<IButtonProps> = ({ text }) => {
-  return(
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.textStyle}>
-            { text }
-        </Text>
-      </TouchableOpacity>
-  )
+
+export const Button: React.FC<IButtonProps> = ({text, onPress}) => {
+    return (
+        <TouchableOpacity
+            onPress={onPress}
+            style={styles.button}
+        >
+            <Text style={styles.textStyle}>
+                {text}
+            </Text>
+        </TouchableOpacity>
+    )
 }

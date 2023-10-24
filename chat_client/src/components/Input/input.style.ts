@@ -14,5 +14,12 @@ export const styles = StyleSheet.create({
         height: 52,
         paddingHorizontal: 16,
         fontSize: 16
+    },
+    errorText: {
+        color: "red"
+    },
+    errorInput: {
+        borderWidth: 1,
+        borderColor: "red",
     }
 })
