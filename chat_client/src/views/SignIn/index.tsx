@@ -1,4 +1,10 @@
-import {SafeAreaView, Text, View} from "react-native";
+import {
+    Keyboard, KeyboardAvoidingView,
+    SafeAreaView,
+    Text,
+    TouchableWithoutFeedback,
+    View
+} from "react-native";
 import React, {useLayoutEffect, useState} from "react";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../types";
@@ -13,7 +19,6 @@ export const SignIn: React.FC<SignInScreenProps> = ({navigation}) => {
 
     const [usernameError, setUsernameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
-
 
 
     useLayoutEffect(() => {
@@ -36,36 +41,44 @@ export const SignIn: React.FC<SignInScreenProps> = ({navigation}) => {
         }
     }
 
-  return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.signinWrapper}>
-            <Title text="RealtimeChat" color="#202020" />
-            <Input
-                title="Username"
-                value={username}
-                error={usernameError}
-                setValue={setUsername}
-                setError={setUsernameError}
-            />
-            <Input
-                title="password"
-                value={password}
-                error={passwordError}
-                setValue={setPassword}
-                setError={setPasswordError}
-            />
-            <Button text="Sign In" onPress={onSignIn} />
+    return (
+        <SafeAreaView style={styles.container}>
+            <KeyboardAvoidingView
+                behavior="height"
+                style={{ flex: 1 }}
+            >
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View style={styles.signinWrapper}>
+                        <Title text="RealtimeChat" color="#202020"/>
+                        <Input
+                            title="Username"
+                            value={username}
+                            error={usernameError}
+                            setValue={setUsername}
+                            setError={setUsernameError}
+                        />
+                        <Input
+                            title="password"
+                            value={password}
+                            error={passwordError}
+                            setValue={setPassword}
+                            setError={setPasswordError}
+                            hideText
+                        />
+                        <Button text="Sign In" onPress={onSignIn}/>
 
-            <Text style={styles.textStyle}>
-                Don't have an account?{' '}
-                <Text
-                    style={{ color: "blue" }}
-                    onPress={() => navigation.navigate('SignUp')}
-                >
-                    Sign Up
-                </Text>
-            </Text>
-        </View>
-      </SafeAreaView>
-  )
+                        <Text style={styles.textStyle}>
+                            Don't have an account?{' '}
+                            <Text
+                                style={{color: "blue"}}
+                                onPress={() => navigation.navigate('SignUp')}
+                            >
+                                Sign Up
+                            </Text>
+                        </Text>
+                    </View>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
+    )
 }

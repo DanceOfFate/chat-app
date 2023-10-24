@@ -1,4 +1,10 @@
-import {SafeAreaView, Text, View} from "react-native";
+import {
+    Keyboard, KeyboardAvoidingView,
+    SafeAreaView,
+    Text,
+    TouchableWithoutFeedback,
+    View
+} from "react-native";
 import React, {useLayoutEffect, useState} from "react";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../types";
@@ -7,7 +13,7 @@ import {Button, Input} from "../../components";
 
 type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, "SignUp">
 
-export const SignUp: React.FC<SignUpScreenProps> = ({ navigation }) => {
+export const SignUp: React.FC<SignUpScreenProps> = ({navigation}) => {
     const [username, setUsername] = useState("");
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
@@ -59,60 +65,66 @@ export const SignUp: React.FC<SignUpScreenProps> = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.signupWrapper}>
-                <Text style={styles.header}>
-                    Sign Up
-                </Text>
-                <Input
-                    title="Username"
-                    value={username}
-                    setValue={setUsername}
-                    error={usernameError}
-                    setError={setUsernameError}
-                />
-                <Input
-                    title="First Name"
-                    value={firstname}
-                    setValue={setFirstname}
-                    error={firstnameError}
-                    setError={setFirstnameError}
-                />
-                <Input
-                    title="Last Name"
-                    value={lastname}
-                    setValue={setLastname}
-                    error={lastnameError}
-                    setError={setLastnameError}
-                />
-                <Input
-                    title="Password"
-                    setValue={setPassword}
-                    value={password}
-                    error={passwordError}
-                    setError={setPasswordError}
-                />
-                <Input
-                    title="Confirm Password"
-                    setValue={setPasswordConfirmation}
-                    value={passwordConfirmation}
-                    error={passwordConfirmationError}
-                    setError={setPasswordConfirmationError}
-                />
-                <Button
-                    text="Sign Up"
-                    onPress={onSignIn}
-                />
+            <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View style={styles.signupWrapper}>
+                        <Text style={styles.header}>
+                            Sign Up
+                        </Text>
+                        <Input
+                            title="Username"
+                            value={username}
+                            setValue={setUsername}
+                            error={usernameError}
+                            setError={setUsernameError}
+                        />
+                        <Input
+                            title="First Name"
+                            value={firstname}
+                            setValue={setFirstname}
+                            error={firstnameError}
+                            setError={setFirstnameError}
+                        />
+                        <Input
+                            title="Last Name"
+                            value={lastname}
+                            setValue={setLastname}
+                            error={lastnameError}
+                            setError={setLastnameError}
+                        />
+                        <Input
+                            title="Password"
+                            setValue={setPassword}
+                            value={password}
+                            error={passwordError}
+                            setError={setPasswordError}
+                            hideText
+                        />
+                        <Input
+                            title="Confirm Password"
+                            setValue={setPasswordConfirmation}
+                            value={passwordConfirmation}
+                            error={passwordConfirmationError}
+                            setError={setPasswordConfirmationError}
+                            hideText
+                        />
+                        <Button
+                            text="Sign Up"
+                            onPress={onSignIn}
+                        />
 
-                <Text style={styles.textStyle}>
-                    Already have an account? {' '}
-                    <Text
-                        onPress={() => navigation.goBack()}
-                        style={{ color: 'blue' }}
-                    >
-                        Sign in.
-                    </Text>
-                </Text>
-            </View>
+                        <Text style={styles.textStyle}>
+                            Already have an account? {' '}
+                            <Text
+                                onPress={() => navigation.goBack()}
+                                style={{color: 'blue'}}
+                            >
+                                Sign in.
+                            </Text>
+                        </Text>
+                    </View>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     )
 }

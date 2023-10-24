@@ -8,6 +8,7 @@ interface IInputProps {
     setValue: (text: string) => void;
     error: string;
     setError: (error: string) => void;
+    hideText?: boolean;
 }
 
 export const Input: React.FC<IInputProps> = ({
@@ -15,7 +16,8 @@ export const Input: React.FC<IInputProps> = ({
                                                  value,
                                                  setValue,
                                                  error,
-                                                 setError
+                                                 setError,
+                                                 hideText
                                              }) => {
     return (
         <View>
@@ -32,6 +34,7 @@ export const Input: React.FC<IInputProps> = ({
                         setError("")
                     }
                 }}
+                secureTextEntry={hideText}
             />
         </View>
     )
