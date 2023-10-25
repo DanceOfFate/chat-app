@@ -10,6 +10,9 @@ import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../types";
 import {styles} from "./signin.style";
 import {Button, Input, Title} from "../../components";
+import { useDispatch, useSelector } from "react-redux";
+import { signInUserWithCredentials } from "../../store/auth/actions";
+import { AppDispatch, RootState } from "../../store";
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, "SignIn">
 
@@ -19,6 +22,9 @@ export const SignIn: React.FC<SignInScreenProps> = ({navigation}) => {
 
     const [usernameError, setUsernameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const user = useSelector<RootState>(state => state.auth.user);
+
+    const dispatch = useDispatch<AppDispatch>();
 
 
     useLayoutEffect(() => {
@@ -27,8 +33,11 @@ export const SignIn: React.FC<SignInScreenProps> = ({navigation}) => {
         })
     }, []);
 
-    const onSignIn = () => {
-        console.log("Pressed!", username, password);
+    const onSignIn = async (username: string, password: string) => {
+        const data = {
+            username,
+            password
+        }
 
         const failUsername = !username;
         const failPassword = !password;
@@ -39,6 +48,9 @@ export const SignIn: React.FC<SignInScreenProps> = ({navigation}) => {
         if (failPassword) {
             setPasswordError("Password not provided")
         }
+
+        const response = await dispatch(signInUserWithCredentials(data))
+
     }
 
     return (
@@ -65,7 +77,7 @@ export const SignIn: React.FC<SignInScreenProps> = ({navigation}) => {
                             setError={setPasswordError}
                             hideText
                         />
-                        <Button text="Sign In" onPress={onSignIn}/>
+                        <Button text="Sign In" onPress={() => onSignIn(username, password)}/>
 
                         <Text style={styles.textStyle}>
                             Don't have an account?{' '}
